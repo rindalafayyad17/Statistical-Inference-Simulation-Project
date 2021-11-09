@@ -1,0 +1,37 @@
+---
+title: "project"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+STEP 1
+
+Simulate data
+- fix n 
+- Xi from a jointly Uniform distribution
+- Noise from a normal distribution (mean = 0, variance = very small)
+- Yi linear combination of the Xi's + noise (with fixed Betas)
+
+STEP 2
+
+- Fit a linear regression model
+- Get Beta estimators 
+
+Check Lab 10 simulation
+
+REPEAT Step 1 and Step 2 100 times
+Get expected value of the Beta estimators. 
+Get Sample Variance of the Beta estimators. 
+Get MSE (check for consistency)
+
+Repeat again with larger p
+Do this until you reach a problem
+
+
+
+```{r}
+
+```
+
