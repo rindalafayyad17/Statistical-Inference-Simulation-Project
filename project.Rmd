@@ -1,6 +1,7 @@
 ---
 title: "project"
 output: html_document
+authors: Yishan Zheng, Rindala Fayyad, Lauren Mock, Daniel Herrera, Yuning Liu, Jinyi Che
 ---
 
 ```{r setup, include=FALSE}
@@ -14,10 +15,37 @@ Simulate data
 - Noise from a normal distribution (mean = 0, variance = very small)
 - Yi linear combination of the Xi's + noise (with fixed Betas)
 
+```{r}
+simulation <- function(n, d) {
+  set.seed(0)
+  betas <- runif(d + 1, min = 0, max = 10)
+  dat <- matrix(nrow = n, ncol = d + 1)
+  dat <- as.data.frame(dat)
+  e_vec <- rnorm(n, mean = 0, sd = 10)
+  for (i in 1:n) {
+    x_vec <- runif(d, min = 0, max = 100)
+    y <- sum(betas[2 : length(betas)] * x_vec) + betas[1] + e_vec[i]
+    row <- c(y, x_vec)
+    dat[i,] <- row
+  }
+  colnames(dat)[1] <- "Y"
+  lreg <- lm(Y ~ ., data = dat)
+  return (list(estimate = summary(lreg)$coeff[,1], true = betas))
+}
+
+beta_estimate <- simulation(50, 1)
+
+```
+
+
 STEP 2
 
 - Fit a linear regression model
 - Get Beta estimators 
+
+```{r}
+
+```
 
 Check Lab 10 simulation
 
@@ -28,8 +56,6 @@ Get MSE (check for consistency)
 
 Repeat again with larger p
 Do this until you reach a problem
-
-
 
 ```{r}
 
