@@ -17,7 +17,7 @@ Simulate data
 
 ```{r}
 simulation <- function(n, d) {
-  set.seed(0)
+  #set.seed(0)
   betas <- runif(d + 1, min = 0, max = 10)
   dat <- matrix(nrow = n, ncol = d + 1)
   dat <- as.data.frame(dat)
@@ -30,10 +30,10 @@ simulation <- function(n, d) {
   }
   colnames(dat)[1] <- "Y"
   lreg <- lm(Y ~ ., data = dat)
-  return (list(estimate = summary(lreg)$coeff[,1], true = betas))
+  estimate <- summary(lreg)$coeff[,1]
+  return (estimate)
 }
 
-beta_estimate <- simulation(50, 1)
 
 ```
 
@@ -54,10 +54,97 @@ Get expected value of the Beta estimators.
 Get Sample Variance of the Beta estimators. 
 Get MSE (check for consistency)
 
-Repeat again with larger p
-Do this until you reach a problem
-
+For d = 1
 ```{r}
+d = 1
+n = 100
+betas1 <- matrix(nrow = 1000, ncol = d + 1)
+betas1 <- as.data.frame(betas1)
 
+for (i in 1:1000){
+  betas1[i,] <- simulation(n, d)
+}
+
+var1 <- matrix(nrow = 1, ncol = d + 1)
+var1 <- as.data.frame(var1)
+
+var1[,1] <- var(betas1[,1])
+for (i in 1: d + 1){
+  var1[,i] <- var(betas1[,i])
+}
+
+View(var1)
 ```
 
+
+Repeat again with larger d
+Do this until you reach a problem
+
+
+For d = 50
+```{r}
+d = 50
+n = 100
+betas50 <- matrix(nrow = 1000, ncol = d + 1)
+betas50 <- as.data.frame(betas50)
+
+for (i in 1:1000){
+  betas50[i,] <- simulation(n, d)
+}
+
+var50 <- matrix(nrow = 1, ncol = d + 1)
+var50 <- as.data.frame(var50)
+
+var50[,1] <- var(betas50[,1])
+for (i in 1: d + 1){
+  var50[,i] <- var(betas50[,i])
+}
+
+View(var50)
+```
+
+For d = 98
+```{r}
+d = 98
+n = 100
+betas98 <- matrix(nrow = 1000, ncol = d + 1)
+betas98 <- as.data.frame(betas98)
+
+for (i in 1:1000){
+  betas98[i,] <- simulation(n, d)
+}
+
+var98 <- matrix(nrow = 1, ncol = d + 1)
+var98 <- as.data.frame(var98)
+
+var98[,1] <- var(betas98[,1])
+for (i in 1: d + 1){
+  var98[,i] <- var(betas98[,i])
+}
+
+View(var98)
+```
+
+For d = 99
+```{r}
+d = 99
+n = 100
+betas99 <- matrix(nrow = 1000, ncol = d + 1)
+betas99 <- as.data.frame(betas99)
+
+for (i in 1:1000){
+  betas99[i,] <- simulation(n, d)
+}
+
+var99 <- matrix(nrow = 1, ncol = d + 1)
+var99 <- as.data.frame(var99)
+
+var99[,1] <- var(betas99[,1])
+for (i in 1: d + 1){
+  var99[,i] <- var(betas99[,i])
+}
+
+View(var99)
+```
+
+We notice that the MSE of the Beta estimates (which is equal to the Variance, since these estimates are unbiased by default (LSE)) increases drastically when we set the number of parameters = n - 1. This shows that when the number of parameters is very close to the sample size, we lose consistency of the Beta estimators. When we set the number of parameters = n, our code crashes. 
