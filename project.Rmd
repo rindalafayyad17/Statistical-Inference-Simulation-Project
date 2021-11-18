@@ -148,3 +148,19 @@ View(var99)
 ```
 
 We notice that the MSE of the Beta estimates (which is equal to the Variance, since these estimates are unbiased by default (LSE)) increases drastically when we set the number of parameters = n - 1. This shows that when the number of parameters is very close to the sample size, we lose consistency of the Beta estimators. When we set the number of parameters = n, our code crashes. 
+
+```{r}
+library(ggplot2)
+library(dplyr)
+
+MSE_beta1 <- c(var1[,2], var50[,2], var98[,2], var99[,2])
+nb <- c(1,50,98,99)
+temp <- data.frame(MSE = MSE_beta1, nb = nb)
+temp %>% ggplot(aes(x = nb, y = MSE_beta1)) +
+  geom_point() +
+  geom_line() + 
+  labs(x = "Number of Parameters", y = "MSE of Beta 1") + 
+  ggtitle("n = 100")
+
+```
+
