@@ -163,4 +163,7 @@ temp %>% ggplot(aes(x = nb, y = MSE_beta1)) +
   ggtitle("n = 100")
 
 ```
-
+- Add code for more ds
+- plot MSE on a log scale
+- plot MSE excluding d = 99
+- 
