@@ -73,7 +73,6 @@ for (i in 1: d + 1){
   var1[,i] <- var(betas1[,i])
 }
 
-View(var1)
 ```
 
 
@@ -100,7 +99,48 @@ for (i in 1: d + 1){
   var50[,i] <- var(betas50[,i])
 }
 
-View(var50)
+```
+
+For d = 75
+```{r}
+d = 75
+n = 100
+betas75 <- matrix(nrow = 1000, ncol = d + 1)
+betas75 <- as.data.frame(betas75)
+
+for (i in 1:1000){
+  betas75[i,] <- simulation(n, d)
+}
+
+var75 <- matrix(nrow = 1, ncol = d + 1)
+var75 <- as.data.frame(var75)
+
+var75[,1] <- var(betas75[,1])
+for (i in 1: d + 1){
+  var75[,i] <- var(betas75[,i])
+}
+
+```
+
+For d = 97
+```{r}
+d = 97
+n = 100
+betas97 <- matrix(nrow = 1000, ncol = d + 1)
+betas97 <- as.data.frame(betas97)
+
+for (i in 1:1000){
+  betas97[i,] <- simulation(n, d)
+}
+
+var97 <- matrix(nrow = 1, ncol = d + 1)
+var97 <- as.data.frame(var97)
+
+var97[,1] <- var(betas97[,1])
+for (i in 1: d + 1){
+  var97[,i] <- var(betas97[,i])
+}
+
 ```
 
 For d = 98
@@ -122,7 +162,6 @@ for (i in 1: d + 1){
   var98[,i] <- var(betas98[,i])
 }
 
-View(var98)
 ```
 
 For d = 99
@@ -144,26 +183,58 @@ for (i in 1: d + 1){
   var99[,i] <- var(betas99[,i])
 }
 
-View(var99)
 ```
 
-We notice that the MSE of the Beta estimates (which is equal to the Variance, since these estimates are unbiased by default (LSE)) increases drastically when we set the number of parameters = n - 1. This shows that when the number of parameters is very close to the sample size, we lose consistency of the Beta estimators. When we set the number of parameters = n, our code crashes. 
+We notice that the MSE of the Beta estimates (which is equal to the Variance, since these estimates are unbiased by default (OLS estimators)) increases drastically when we set the number of parameters = n - 1. This shows that when the number of parameters is very close to the sample size, we lose consistency of the Beta estimators. When we set the number of parameters = n, our code crashes. 
 
 ```{r}
 library(ggplot2)
 library(dplyr)
 
-MSE_beta1 <- c(var1[,2], var50[,2], var98[,2], var99[,2])
-nb <- c(1,50,98,99)
+MSE_beta1 <- c(var1[,2], var50[,2], var75[,2], var97[,2], var98[,2], var99[,2])
+MSE_beta0 <- c(var1[,1], var50[,1], var75[,1], var97[,1], var98[,1], var99[,1])
+MSE_beta26 <- c(NA, var50[,27], var75[,27], var97[,27], var98[,27], var99[,27])
+nb <- c(1,50,75, 97, 98,99)
+colors <- c("MSE Beta0" = "blue", "MSE Beta1" = "red", "MSE Beta26" = "orange")
+
 temp <- data.frame(MSE = MSE_beta1, nb = nb)
-temp %>% ggplot(aes(x = nb, y = MSE_beta1)) +
-  geom_point() +
-  geom_line() + 
-  labs(x = "Number of Parameters", y = "MSE of Beta 1") + 
-  ggtitle("n = 100")
+temp %>% ggplot() +
+  geom_point(aes(x = nb, y = MSE_beta1)) +
+  geom_line(aes(x = nb, y = MSE_beta1, color = "MSE Beta1")) +
+  geom_point(aes(x = nb, y = MSE_beta0))+
+  geom_line(aes(x = nb, y = MSE_beta0, color = "MSE Beta0")) +
+  geom_point(aes(x = nb, y = MSE_beta26)) +
+  geom_line(aes(x = nb, y = MSE_beta26, color = "MSE Beta26")) +
+  labs(x = "Number of Parameters", y = "MSE") + 
+  ggtitle("n = 100")+
+  scale_y_continuous(trans = "log10")+
+  scale_color_manual(values = colors)+
+  theme(legend.title = element_blank())
 
 ```
-- Add code for more ds
-- plot MSE on a log scale
-- plot MSE excluding d = 99
-- 
+
+```{r}
+#Excluding var99
+
+MSE_beta1 <- c(var1[,2], var50[,2], var75[,2], var97[,2], var98[,2])
+MSE_beta2 <- c(NA, var50[,3], var75[,3], var97[,3], var98[,3])
+MSE_beta26 <- c(NA, var50[,27], var75[,27], var97[,27], var98[,27])
+nb <- c(1,50,75, 97, 98)
+colors <- c( "MSE Beta1" = "red", "MSE Beta26" = "orange", "MSE Beta2" = "green")
+
+temp <- data.frame(MSE = MSE_beta1, nb = nb)
+temp %>% ggplot() +
+  geom_point(aes(x = nb, y = MSE_beta1)) +
+  geom_line(aes(x = nb, y = MSE_beta1, color = "MSE Beta1")) +
+  geom_point(aes(x = nb, y = MSE_beta2))+
+  geom_line(aes(x = nb, y = MSE_beta2, color = "MSE Beta2")) +
+  geom_point(aes(x = nb, y = MSE_beta26)) +
+  geom_line(aes(x = nb, y = MSE_beta26, color = "MSE Beta26")) +
+  labs(x = "Number of Parameters", y = "MSE") + 
+  ggtitle("n = 100")+
+  scale_color_manual(values = colors)+
+  theme(legend.title = element_blank())+
+  scale_x_continuous(breaks = c(0, 50, 75, 98))
+
+```
+
