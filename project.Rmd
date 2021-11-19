@@ -1,7 +1,10 @@
 ---
 title: "project"
-output: html_document
-authors: Yishan Zheng, Rindala Fayyad, Lauren Mock, Daniel Herrera, Yuning Liu, Jinyi Che
+output:
+  word_document: default
+  html_document: default
+authors: Yishan Zheng, Rindala Fayyad, Lauren Mock, Daniel Herrera, Yuning Liu, Jinyi
+  Che
 ---
 
 ```{r setup, include=FALSE}
@@ -22,7 +25,6 @@ STEP 2
 
 ```{r}
 simulation <- function(n, d) {
-  #set.seed(0)
   betas <- runif(d + 1, min = 0, max = 10)
   dat <- matrix(nrow = n, ncol = d + 1)
   dat <- as.data.frame(dat)
@@ -48,6 +50,8 @@ Get MSE for each estimator (check for consistency)
 
 For d = 1
 ```{r}
+
+set.seed(17)
 d = 1
 n = 100
 betas1 <- matrix(nrow = 1000, ncol = d + 1)
@@ -65,6 +69,9 @@ for (i in 1: d + 1){
   var1[,i] <- var(betas1[,i])
 }
 
+head(betas1)
+head(var1)
+
 ```
 
 
@@ -74,6 +81,7 @@ Do this until you reach a problem
 
 For d = 50
 ```{r}
+set.seed(17)
 d = 50
 n = 100
 betas50 <- matrix(nrow = 1000, ncol = d + 1)
@@ -91,10 +99,13 @@ for (i in 1: d + 1){
   var50[,i] <- var(betas50[,i])
 }
 
+head(betas50)
+head(var50)
 ```
 
 For d = 75
 ```{r}
+set.seed(17)
 d = 75
 n = 100
 betas75 <- matrix(nrow = 1000, ncol = d + 1)
@@ -112,10 +123,14 @@ for (i in 1: d + 1){
   var75[,i] <- var(betas75[,i])
 }
 
+head(betas75)
+head(var75)
+
 ```
 
 For d = 97
 ```{r}
+set.seed(17)
 d = 97
 n = 100
 betas97 <- matrix(nrow = 1000, ncol = d + 1)
@@ -133,10 +148,14 @@ for (i in 1: d + 1){
   var97[,i] <- var(betas97[,i])
 }
 
+head(betas97)
+head(var97)
+
 ```
 
 For d = 98
 ```{r}
+set.seed(17)
 d = 98
 n = 100
 betas98 <- matrix(nrow = 1000, ncol = d + 1)
@@ -154,10 +173,13 @@ for (i in 1: d + 1){
   var98[,i] <- var(betas98[,i])
 }
 
+head(betas98)
+head(var98)
 ```
 
 For d = 99
 ```{r}
+set.seed(17)
 d = 99
 n = 100
 betas99 <- matrix(nrow = 1000, ncol = d + 1)
@@ -174,6 +196,9 @@ var99[,1] <- var(betas99[,1])
 for (i in 1: d + 1){
   var99[,i] <- var(betas99[,i])
 }
+
+head(betas99)
+head(var99)
 
 ```
 
