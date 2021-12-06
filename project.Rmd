@@ -70,13 +70,16 @@ n = 100
 betas1 <- matrix(nrow = 1000, ncol = d + 1)
 betas1 <- as.data.frame(betas1)
 
+# run the simulation with n and d 1000 times
 for (i in 1:1000){
   betas1[i,] <- simulation(n, d)
 }
 
+# empty data frame
 var1 <- matrix(nrow = 1, ncol = d + 1)
 var1 <- as.data.frame(var1)
 
+# calculate variance of each estimator
 var1[,1] <- var(betas1[,1])
 for (i in 1: d + 1){
   var1[,i] <- var(betas1[,i])
@@ -97,13 +100,16 @@ n = 100
 betas50 <- matrix(nrow = 1000, ncol = d + 1)
 betas50 <- as.data.frame(betas50)
 
+# run the simulation with n and d 1000 times
 for (i in 1:1000){
   betas50[i,] <- simulation(n, d)
 }
 
+# empty data frame
 var50 <- matrix(nrow = 1, ncol = d + 1)
 var50 <- as.data.frame(var50)
 
+# calculate variance of each estimator
 var50[,1] <- var(betas50[,1])
 for (i in 1: d + 1){
   var50[,i] <- var(betas50[,i])
@@ -122,13 +128,16 @@ n = 100
 betas75 <- matrix(nrow = 1000, ncol = d + 1)
 betas75 <- as.data.frame(betas75)
 
+# run the simulation with n and d 1000 times
 for (i in 1:1000){
   betas75[i,] <- simulation(n, d)
 }
 
+# empty data frame
 var75 <- matrix(nrow = 1, ncol = d + 1)
 var75 <- as.data.frame(var75)
 
+# calculate variance of each estimator
 var75[,1] <- var(betas75[,1])
 for (i in 1: d + 1){
   var75[,i] <- var(betas75[,i])
@@ -149,13 +158,16 @@ n = 100
 betas97 <- matrix(nrow = 1000, ncol = d + 1)
 betas97 <- as.data.frame(betas97)
 
+# run the simulation with n and d 1000 times
 for (i in 1:1000){
   betas97[i,] <- simulation(n, d)
 }
 
+# empty data frame
 var97 <- matrix(nrow = 1, ncol = d + 1)
 var97 <- as.data.frame(var97)
 
+# calculate variance of each estimator
 var97[,1] <- var(betas97[,1])
 for (i in 1: d + 1){
   var97[,i] <- var(betas97[,i])
@@ -176,13 +188,16 @@ n = 100
 betas98 <- matrix(nrow = 1000, ncol = d + 1)
 betas98 <- as.data.frame(betas98)
 
+# run the simulation with n and d 1000 times
 for (i in 1:1000){
   betas98[i,] <- simulation(n, d)
 }
 
+# empty data frame
 var98 <- matrix(nrow = 1, ncol = d + 1)
 var98 <- as.data.frame(var98)
 
+# calculate variance of each estimator
 var98[,1] <- var(betas98[,1])
 for (i in 1: d + 1){
   var98[,i] <- var(betas98[,i])
@@ -202,13 +217,16 @@ n = 100
 betas99 <- matrix(nrow = 1000, ncol = d + 1)
 betas99 <- as.data.frame(betas99)
 
+# run the simulation with n and d 1000 times
 for (i in 1:1000){
   betas99[i,] <- simulation(n, d)
 }
 
+# empty data frame
 var99 <- matrix(nrow = 1, ncol = d + 1)
 var99 <- as.data.frame(var99)
 
+# calculate variance of each estimator
 var99[,1] <- var(betas99[,1])
 for (i in 1: d + 1){
   var99[,i] <- var(betas99[,i])
