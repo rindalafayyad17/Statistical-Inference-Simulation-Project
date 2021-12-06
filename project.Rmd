@@ -1,5 +1,5 @@
 ---
-title: "project"
+title: "BST 222 Final Project"
 output:
   word_document: default
   html_document: default
@@ -10,45 +10,58 @@ authors: Yishan Zheng, Rindala Fayyad, Lauren Mock, Daniel Herrera, Yuning Liu, 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-STEP 1
+
+
+## Write a function for each simulation
+
+# STEP 1
 
 Simulate data
-- fix n 
-- Xi from a jointly Uniform distribution
-- Noise from a normal distribution (mean = 0, variance = very small)
-- Yi linear combination of the Xi's + noise (with fixed Betas)
+- generate true beta values
+- generate random noise (error terms) for each row/observation
+- sample Xi's from a jointly Uniform distribution
+- calculate Y values for each vector of X's using true betas and error terms
+- result: simulated dataset
 
-STEP 2
+# STEP 2
 
-- Fit a linear regression model
-- Get Beta estimators 
+- fit a linear regression model on this simulated dataset
+- result: empirical beta estimates 
 
 ```{r}
+# write a function to use for each simulation
 simulation <- function(n, d) {
-  betas <- runif(d + 1, min = 0, max = 10)
-  dat <- matrix(nrow = n, ncol = d + 1)
+  betas <- runif(d + 1, min = 0, max = 10) # simulate d+1 beta coefficients
+  dat <- matrix(nrow = n, ncol = d + 1) # create empty data frame with n rows and d+1 columns
   dat <- as.data.frame(dat)
-  e_vec <- rnorm(n, mean = 0, sd = 10)
+  e_vec <- rnorm(n, mean = 0, sd = 10) # vector for error terms (random noise)
+  
+  # now use these betas to simulate data (known underlying distribution)
   for (i in 1:n) {
-    x_vec <- runif(d, min = 0, max = 100)
-    y <- sum(betas[2 : length(betas)] * x_vec) + betas[1] + e_vec[i]
-    row <- c(y, x_vec)
-    dat[i,] <- row
+    x_vec <- runif(d, min = 0, max = 100) # simulate a vector of X values from U[0,100]
+    y <- sum(betas[2 : length(betas)] * x_vec) + betas[1] + e_vec[i] # Y = B0 + B1X1 + B2X2 + ... + error
+    row <- c(y, x_vec) 
+    dat[i,] <- row # fill in the data frame row by row with y and the vector of X values
   }
-  colnames(dat)[1] <- "Y"
-  lreg <- lm(Y ~ ., data = dat)
-  estimate <- summary(lreg)$coeff[,1]
-  return (estimate)
+  
+  # run a linear regression model on the simulated data
+  colnames(dat)[1] <- "Y" # name first column "Y" (considered the outcome)
+  lreg <- lm(Y ~ ., data = dat) # run a linear regression model to predict Y given the Xs
+  estimate <- summary(lreg)$coeff[,1] # calculate regression coefficients (betas)
+  return (estimate) # return betas
 }
-
-
 ```
 
 
-REPEAT Step 1 and Step 2 1000 times
-Get MSE for each estimator (check for consistency)
+# STEP 3
 
-For d = 1
+- repeat steps 1 and 2 1000 times for each desired value of d (the number of parameters)
+- calculate MSE for all estimators
+- check for consistency in estimators
+
+
+For d = 1:
+
 ```{r}
 
 set.seed(17)
@@ -75,11 +88,8 @@ head(var1)
 ```
 
 
-Repeat again with larger d
-Do this until you reach a problem
-
-
 For d = 50
+
 ```{r}
 set.seed(17)
 d = 50
@@ -103,7 +113,8 @@ head(betas50)
 head(var50)
 ```
 
-For d = 75
+For d = 75:
+
 ```{r}
 set.seed(17)
 d = 75
@@ -128,7 +139,9 @@ head(var75)
 
 ```
 
-For d = 97
+
+For d = 97:
+
 ```{r}
 set.seed(17)
 d = 97
@@ -153,7 +166,9 @@ head(var97)
 
 ```
 
-For d = 98
+
+For d = 98:
+
 ```{r}
 set.seed(17)
 d = 98
@@ -177,7 +192,9 @@ head(betas98)
 head(var98)
 ```
 
-For d = 99
+
+For d = 99:
+
 ```{r}
 set.seed(17)
 d = 99
