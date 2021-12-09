@@ -287,8 +287,8 @@ temp <- data.frame(MSE1 = MSE_beta1,
 temp %>% ggplot() +
   geom_point(aes(x = nb, y = value, color = MSE)) +
   geom_line(aes(x = nb, y = value, color = MSE)) +
-  labs(x = "Number of Parameters", y = "MSE (log scale)") + 
-  ggtitle("MSE vs. Number of Parameters (n = 100)")+
+  labs(x = "Number of Slope Parameters", y = "MSE (log scale)") + 
+  ggtitle("MSE vs. Number of Slope Parameters (n = 100)")+
   scale_y_continuous(trans = "log10")+
   scale_color_discrete(name = expression(paste(beta)), 
                        labels = c(expression(paste(beta, 1)), expression(paste(beta, 26))))
@@ -310,8 +310,8 @@ temp <- data.frame(MSE1 = MSE_beta1,
 temp %>% ggplot() +
   geom_point(aes(x = nb, y = value, color = MSE)) +
   geom_line(aes(x = nb, y = value, color = MSE)) +
-  labs(x = "Number of Parameters", y = "MSE (log scale)") + 
-  ggtitle("MSE vs. Number of Parameters (n = 100)")+
+  labs(x = "Number of Slope Parameters", y = "MSE (log scale)") + 
+  ggtitle("MSE vs. Number of Slope Parameters (n = 100)")+
   scale_y_continuous(trans = "log10")+
   scale_color_discrete(name = expression(paste(beta)), 
                        labels = c(expression(paste(beta, 1)), expression(paste(beta, 26))))
