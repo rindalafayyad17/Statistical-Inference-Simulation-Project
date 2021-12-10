@@ -11,22 +11,7 @@ authors: Yishan Zheng, Rindala Fayyad, Lauren Mock, Daniel Herrera, Yuning Liu, 
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-
-## Write a function for each simulation
-
-STEP 1
-
-Simulate data
-- generate true beta values
-- generate random noise (error terms) for each row/observation
-- sample Xi's from a jointly Uniform distribution
-- calculate Y values for each vector of X's using true betas and error terms
-- result: simulated dataset
-
-STEP 2
-
-- fit a linear regression model on this simulated dataset
-- result: empirical beta estimates 
+## Write a function to use for each simulation
 
 ```{r}
 # write a function to use for each simulation
@@ -51,13 +36,6 @@ simulation <- function(n, d) {
   return (estimate) # return betas
 }
 ```
-
-
-STEP 3
-
-- repeat steps 1 and 2 1000 times for each desired value of d (the number of parameters)
-- calculate MSE for all estimators
-- check for consistency in estimators
 
 
 For d = 1:
@@ -237,35 +215,6 @@ head(var99)
 
 ```
 
-We notice that the MSE of the Beta estimates (which is equal to the Variance, since these estimates are unbiased by default (OLS estimators)) increases drastically when we set the number of parameters = n - 1. This shows that when the number of parameters is very close to the sample size, we lose consistency of the Beta estimators. When we set the number of parameters = n, our code crashes. 
-
-```{r}
-# library(ggplot2)
-# library(dplyr)
-# 
-# MSE_beta1 <- c(var1[,2], var50[,2], var75[,2], var97[,2], var98[,2], var99[,2])
-# MSE_beta0 <- c(var1[,1], var50[,1], var75[,1], var97[,1], var98[,1], var99[,1])
-# MSE_beta26 <- c(NA, var50[,27], var75[,27], var97[,27], var98[,27], var99[,27])
-# nb <- c(1,50,75, 97, 98,99)
-# colors <- c("MSE Beta0" = "blue", "MSE Beta1" = "red", "MSE Beta26" = "orange")
-# 
-# temp <- data.frame(MSE = MSE_beta1, nb = nb)
-# temp %>% ggplot() +
-#   geom_point(aes(x = nb, y = MSE_beta1)) +
-#   geom_line(aes(x = nb, y = MSE_beta1, color = "MSE Beta1")) +
-#   geom_point(aes(x = nb, y = MSE_beta0))+
-#   geom_line(aes(x = nb, y = MSE_beta0, color = "MSE Beta0")) +
-#   geom_point(aes(x = nb, y = MSE_beta26)) +
-#   geom_line(aes(x = nb, y = MSE_beta26, color = "MSE Beta26")) +
-#   labs(x = "Number of Parameters", y = "MSE") + 
-#   ggtitle("n = 100")+
-#   scale_y_continuous(trans = "log10")+
-#   scale_color_manual(values = colors)+
-#   theme(legend.title = element_blank())
-
-```
-
-
 ## Create some plots with the MSE
 
 ```{r}
@@ -318,31 +267,6 @@ temp %>% ggplot() +
 ```
 
 
-```{r}
-#Excluding var99
-
-# MSE_beta1 <- c(var1[,2], var50[,2], var75[,2], var97[,2], var98[,2])
-# MSE_beta2 <- c(NA, var50[,3], var75[,3], var97[,3], var98[,3])
-# MSE_beta26 <- c(NA, var50[,27], var75[,27], var97[,27], var98[,27])
-# nb <- c(1,50,75, 97, 98)
-# colors <- c( "MSE Beta1" = "red", "MSE Beta26" = "orange", "MSE Beta2" = "green")
-# 
-# temp <- data.frame(MSE = MSE_beta1, nb = nb)
-# temp %>% ggplot() +
-#   geom_point(aes(x = nb, y = MSE_beta1)) +
-#   geom_line(aes(x = nb, y = MSE_beta1, color = "MSE Beta1")) +
-#   geom_point(aes(x = nb, y = MSE_beta2))+
-#   geom_line(aes(x = nb, y = MSE_beta2, color = "MSE Beta2")) +
-#   geom_point(aes(x = nb, y = MSE_beta26)) +
-#   geom_line(aes(x = nb, y = MSE_beta26, color = "MSE Beta26")) +
-#   labs(x = "Number of Parameters", y = "MSE") + 
-#   ggtitle("n = 100")+
-#   scale_color_manual(values = colors)+
-#   theme(legend.title = element_blank())+
-#   scale_x_continuous(breaks = c(0, 50, 75, 98))
-
-```
-
 ## Put all variance/MSE results into a table:
 
 ```{r}
@@ -360,4 +284,5 @@ knitr::kable(mse_table,
   row.names = TRUE,
   escape = FALSE) 
 ```
+
 
