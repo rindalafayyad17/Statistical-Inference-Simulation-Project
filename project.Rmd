@@ -3,8 +3,7 @@ title: "BST 222 Final Project"
 output:
   word_document: default
   html_document: default
-authors: Yishan Zheng, Rindala Fayyad, Lauren Mock, Daniel Herrera, Yuning Liu, Jinyi
-  Che
+authors: Yishan Zheng, Rindala Fayyad, Lauren Mock, Daniel Herrera, Yuning Liu, Jinyi Che
 ---
 
 ```{r setup, include=FALSE}
@@ -55,10 +54,9 @@ simulation <- function(n, d) {
 
 STEP 3
 
-- repeat steps 1 and 2 1000 times for each desired value of d (the number of parameters)
+- repeat steps 1 and 2 1000 times for each desired value of d (the number of predictors)
 - calculate MSE for all estimators
-- check for consistency in estimators
-
+- look for trends in MSE
 
 For d = 1:
 
@@ -148,7 +146,6 @@ head(var75)
 
 ```
 
-
 For d = 97:
 
 ```{r}
@@ -237,34 +234,7 @@ head(var99)
 
 ```
 
-We notice that the MSE of the Beta estimates (which is equal to the Variance, since these estimates are unbiased by default (OLS estimators)) increases drastically when we set the number of parameters = n - 1. This shows that when the number of parameters is very close to the sample size, we lose consistency of the Beta estimators. When we set the number of parameters = n, our code crashes. 
-
-```{r}
-# library(ggplot2)
-# library(dplyr)
-# 
-# MSE_beta1 <- c(var1[,2], var50[,2], var75[,2], var97[,2], var98[,2], var99[,2])
-# MSE_beta0 <- c(var1[,1], var50[,1], var75[,1], var97[,1], var98[,1], var99[,1])
-# MSE_beta26 <- c(NA, var50[,27], var75[,27], var97[,27], var98[,27], var99[,27])
-# nb <- c(1,50,75, 97, 98,99)
-# colors <- c("MSE Beta0" = "blue", "MSE Beta1" = "red", "MSE Beta26" = "orange")
-# 
-# temp <- data.frame(MSE = MSE_beta1, nb = nb)
-# temp %>% ggplot() +
-#   geom_point(aes(x = nb, y = MSE_beta1)) +
-#   geom_line(aes(x = nb, y = MSE_beta1, color = "MSE Beta1")) +
-#   geom_point(aes(x = nb, y = MSE_beta0))+
-#   geom_line(aes(x = nb, y = MSE_beta0, color = "MSE Beta0")) +
-#   geom_point(aes(x = nb, y = MSE_beta26)) +
-#   geom_line(aes(x = nb, y = MSE_beta26, color = "MSE Beta26")) +
-#   labs(x = "Number of Parameters", y = "MSE") + 
-#   ggtitle("n = 100")+
-#   scale_y_continuous(trans = "log10")+
-#   scale_color_manual(values = colors)+
-#   theme(legend.title = element_blank())
-
-```
-
+We notice that the MSE of the Beta estimates (which is equal to the variance, since these estimates are unbiased by default (OLS estimators)) increases drastically when we set the number of parameters = n. This shows that when the number of parameters is very close to the sample size, we lose consistency of the Beta estimators. When we set the number of parameters = n+1, our code crashes. 
 
 ## Create some plots with the MSE
 
@@ -317,31 +287,6 @@ temp %>% ggplot() +
                        labels = c(expression(paste(beta, 1)), expression(paste(beta, 26))))
 ```
 
-
-```{r}
-#Excluding var99
-
-# MSE_beta1 <- c(var1[,2], var50[,2], var75[,2], var97[,2], var98[,2])
-# MSE_beta2 <- c(NA, var50[,3], var75[,3], var97[,3], var98[,3])
-# MSE_beta26 <- c(NA, var50[,27], var75[,27], var97[,27], var98[,27])
-# nb <- c(1,50,75, 97, 98)
-# colors <- c( "MSE Beta1" = "red", "MSE Beta26" = "orange", "MSE Beta2" = "green")
-# 
-# temp <- data.frame(MSE = MSE_beta1, nb = nb)
-# temp %>% ggplot() +
-#   geom_point(aes(x = nb, y = MSE_beta1)) +
-#   geom_line(aes(x = nb, y = MSE_beta1, color = "MSE Beta1")) +
-#   geom_point(aes(x = nb, y = MSE_beta2))+
-#   geom_line(aes(x = nb, y = MSE_beta2, color = "MSE Beta2")) +
-#   geom_point(aes(x = nb, y = MSE_beta26)) +
-#   geom_line(aes(x = nb, y = MSE_beta26, color = "MSE Beta26")) +
-#   labs(x = "Number of Parameters", y = "MSE") + 
-#   ggtitle("n = 100")+
-#   scale_color_manual(values = colors)+
-#   theme(legend.title = element_blank())+
-#   scale_x_continuous(breaks = c(0, 50, 75, 98))
-
-```
 
 ## Put all variance/MSE results into a table:
 
